@@ -25,6 +25,7 @@ const getRandomPlaylist = async () => {
       }
       console.log(playlist);
       loadAudio();
+      document.getElementById("authContainer").style.display = "none";
     } else {
       console.error("Error response:", errorText);
     }
@@ -93,9 +94,11 @@ const loadAudio = (playAfterLoad = false) => {
       .then((res) => res.blob())
       .then((blob) => {
         document.getElementById("albumArt").src = URL.createObjectURL(blob);
+        document.getElementById("albumArt").style.display = "block";
       })
       .catch(() => {
         document.getElementById("albumArt").src = null;
+        document.getElementById("albumArt").style.display = "none";
       });
   }
 };

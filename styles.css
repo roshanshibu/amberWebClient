@@ -17,12 +17,13 @@ body {
   display: flex;
   flex-direction: column;
 }
-.authContainer {
+#authContainer {
   display: flex;
   flex-direction: column;
   max-width: var(--main-width);
   gap: 5px;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .disconnected {
@@ -44,11 +45,12 @@ body {
   flex-direction: column;
   width: var(--main-width);
   margin-bottom: 20px;
+  margin-top: 50px;
 }
 .songDetailsContainer > * {
   text-align: center;
   text-overflow: ellipsis;
-  overflow-x: hidden;
+  overflow: hidden;
   text-wrap: nowrap;
   line-height: 1.2;
   margin: 2px;
@@ -66,10 +68,14 @@ body {
   font-weight: 500;
 }
 
+audio {
+  align-self: center;
+}
 .nextPreviousContainer {
   display: flex;
   width: var(--main-width);
   justify-content: space-around;
+  margin-bottom: 30px;
 }
 .nextPreviousContainer > img {
   padding: 10px 20px;
@@ -81,4 +87,5 @@ body {
   align-self: center;
   aspect-ratio: 1;
   object-fit: contain;
+  display: none;
 }

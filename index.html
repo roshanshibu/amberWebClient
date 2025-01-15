@@ -7,30 +7,23 @@
     <title>Document</title>
   </head>
   <body>
-    <div class="authContainer">
-      <input type="text" id="server" />
-      <input type="password" id="token" />
+    <div id="authContainer">
+      <input type="text" id="server" placeholder="Server URL" />
+      <input type="password" id="token" placeholder="Access Token" />
       <button id="randomPlaylistButton">Random Playlist</button>
       <p>Status: <span id="connectionStatus" class="disconnected"></span></p>
     </div>
     <div class="songDetailsContainer">
-      <h1 id="songName">
-        Long Song Name Goes Here Long Song Name Goes Here Long Song Name Goes
-        Here
-      </h1>
-      <h2 id="artistName">
-        Artists Artists Artists Artists Artists Artists Artists
-      </h2>
-      <h3 id="albumName">
-        Album Album Album Album Album Album Album Album Album Album
-      </h3>
+      <h1 id="songName"></h1>
+      <h2 id="artistName"></h2>
+      <h3 id="albumName"></h3>
     </div>
     <audio preload="true" id="player" controls crossorigin></audio>
     <div class="nextPreviousContainer">
       <img src="previous.png" id="previousSong" />
       <img src="next.png" id="nextSong" />
     </div>
-    <img id="albumArt" src="" alt="" class="" />
+    <img id="albumArt" src="" />
     <script src="https://cdn.jsdelivr.net/hls.js/latest/hls.js"></script>
     <script src="script.js"></script>
   </body>
