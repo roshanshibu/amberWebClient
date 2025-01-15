@@ -1,0 +1,84 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+:root {
+  color-scheme: dark;
+  font-family: "Space Mono";
+  --main-width: 350px;
+}
+* {
+  font-family: "Space Mono";
+}
+html {
+  display: flex;
+  justify-content: center;
+}
+body {
+  width: var(--main-width);
+  display: flex;
+  flex-direction: column;
+}
+.authContainer {
+  display: flex;
+  flex-direction: column;
+  max-width: var(--main-width);
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.disconnected {
+  color: red;
+}
+.disconnected::after {
+  content: "Disconnected";
+}
+
+.connected {
+  color: greenyellow;
+}
+.connected::after {
+  content: "Connected";
+}
+
+.songDetailsContainer {
+  display: flex;
+  flex-direction: column;
+  width: var(--main-width);
+  margin-bottom: 20px;
+}
+.songDetailsContainer > * {
+  text-align: center;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  text-wrap: nowrap;
+  line-height: 1.2;
+  margin: 2px;
+}
+.songDetailsContainer > h1 {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+.songDetailsContainer > h2 {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.songDetailsContainer > h3 {
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.nextPreviousContainer {
+  display: flex;
+  width: var(--main-width);
+  justify-content: space-around;
+}
+.nextPreviousContainer > img {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+#albumArt {
+  width: 250px;
+  align-self: center;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
