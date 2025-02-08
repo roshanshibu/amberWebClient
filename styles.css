@@ -81,12 +81,13 @@ body {
   align-self: flex-end;
   opacity: 0.8;
   margin-top: 2rem;
+  cursor: pointer;
 }
 
 .MusicInfoContainer {
   display: flex;
   flex-direction: column;
-  margin-block: 5px 1.5rem;
+  margin-block: 1.5rem 1.5rem;
 }
 .MusicInfoContainer > * {
   margin: 0;
@@ -94,17 +95,20 @@ body {
   text-overflow: ellipsis;
   overflow: hidden;
   font-size: 1.1rem;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .MusicInfoContainer > h1 {
-  margin-bottom: 15px;
   font-family: "AccentFontRegular";
   line-height: unset;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
 }
 .MusicInfoContainer > h3 {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-family: "PrimaryFont200";
-  letter-spacing: 0.9px;
+  letter-spacing: 0.8px;
 }
 
 #AlbumArt {
@@ -124,6 +128,9 @@ body {
 }
 .TimestampsContainer > p {
   margin-block: 5px 0;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .ControlsContainer {
@@ -134,13 +141,14 @@ body {
 }
 .ControlsContainer > * {
   width: 1.5rem;
+  cursor: pointer;
 }
 .ControlsContainer > *:nth-child(1) {
   padding-right: 2rem;
 }
 .ControlsContainer > *:nth-child(2) {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 3rem;
+  height: 3rem;
 }
 
 .ControlsContainer > *:nth-child(3) {
@@ -186,6 +194,7 @@ body {
   justify-content: center;
   margin-left: 2rem;
   flex: 1;
+  cursor: pointer;
 }
 .SmallPlayer .MusicInfoContainer > h1 {
   margin: 0;
@@ -199,7 +208,10 @@ body {
   margin: 0;
   margin-right: 2rem;
 }
-
+.SmallPlayer .ControlsContainer > *:nth-child(2) {
+  width: 2.5rem;
+  height: 2.5rem;
+}
 /* ---------------------------------------------------- */
 /* Timeline range input                                 */
 /* ---------------------------------------------------- */
