@@ -117,7 +117,7 @@ body {
   border-radius: 5px;
   aspect-ratio: 1;
   object-fit: cover;
-  border: 1px solid #ffffff7f;
+  border: 1px solid #ffffff3b;
   margin-bottom: 1rem;
   background: linear-gradient(135deg, #00000000 0%, #0000001e 100%);
 }
@@ -199,11 +199,12 @@ body {
 }
 .SmallPlayer .MusicInfoContainer > h1 {
   margin: 0;
-  font-size: 1.2rem;
-  max-width: 60vw;
+  font-size: 1rem;
+  max-width: 65vw;
 }
 .SmallPlayer .MusicInfoContainer > h3 {
-  max-width: 60vw;
+  font-size: 0.9rem;
+  max-width: 65vw;
 }
 .SmallPlayer .ControlsContainer {
   margin: 0;
