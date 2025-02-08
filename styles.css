@@ -13,6 +13,7 @@ body {
 }
 * {
   font-family: "PrimaryFont300";
+  -webkit-tap-highlight-color: transparent;
 }
 
 @font-face {
