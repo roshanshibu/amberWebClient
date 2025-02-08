@@ -9,6 +9,7 @@ body {
   margin: 0;
   height: 100svh;
   background: #4d4d4d;
+  overscroll-behavior: contain;
 }
 * {
   font-family: "PrimaryFont300";
@@ -46,7 +47,7 @@ body {
   display: flex;
   gap: 5px;
   flex-direction: column;
-  width: 30rem;
+  width: 30ch;
 }
 
 .PlayerContainer {
@@ -134,9 +135,16 @@ body {
 .ControlsContainer > * {
   width: 1.5rem;
 }
+.ControlsContainer > *:nth-child(1) {
+  padding-right: 2rem;
+}
 .ControlsContainer > *:nth-child(2) {
   width: 2.5rem;
   height: 2.5rem;
+}
+
+.ControlsContainer > *:nth-child(3) {
+  padding-left: 2rem;
 }
 
 /* ---------------------------------------------------- */

@@ -43,7 +43,7 @@ const getRandomPlaylist = async (serverURL, token) => {
         playlistLength = playlist.length;
       }
       console.log(playlist);
-      loadAudio(true);
+      loadAudio(false);
       document
         .getElementsByClassName("AuthContainer")[0]
         .classList.add("Hidden");
@@ -73,6 +73,9 @@ const loadSongDetails = async () => {
   let serverURL = localStorage.getItem("serverURL");
   let token = localStorage.getItem("token");
   const endpoint = `${serverURL}/songDetails?UUID=${playlist[currentSongIndex]}`;
+  let song = "";
+  let artist = "";
+  let album = "";
   try {
     const response = await fetch(endpoint, {
       method: "GET",
@@ -83,17 +86,37 @@ const loadSongDetails = async () => {
 
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
-      document.getElementById("Song").textContent = data["name"];
-      document.getElementById("Artist").textContent =
-        data["artists"] || "Unknown";
-      document.getElementById("Album").textContent = data["album"] || "-";
+      song = data["name"];
+      artist = data["artists"] || "Unknown";
+      album = data["album"] || "-";
+      document.getElementById("Song").textContent = song;
+      document.getElementById("Artist").textContent = artist;
+      document.getElementById("Album").textContent = album;
     } else {
       console.error("Error response:", errorText);
     }
   } catch (error) {
     console.error("Connection error:", error);
   }
+
+  const albumArtSrc = `${serverURL}/Music/${playlist[currentSongIndex]}/${playlist[currentSongIndex]}.png`;
+  const albumArtOptions = {
+    headers: {
+      Authorization: token,
+    },
+  };
+
+  fetch(albumArtSrc, albumArtOptions)
+    .then((res) => res.blob())
+    .then((blob) => {
+      objectURL = URL.createObjectURL(blob);
+      document.getElementById("AlbumArt").src = objectURL;
+      updateNotificationControls(song, artist, album, objectURL);
+    })
+    .catch(() => {
+      document.getElementById("AlbumArt").src = null;
+      updateNotificationControls(song, artist, album, null);
+    });
 };
 
 const loadAudio = (playAfterLoad = false) => {
@@ -112,26 +135,11 @@ const loadAudio = (playAfterLoad = false) => {
       `${serverURL}/Music/${playlist[currentSongIndex]}/${playlist[currentSongIndex]}.m3u8`
     );
     hls.attachMedia(audio);
+    navigator.mediaSession.setPositionState(null);
     if (playAfterLoad) {
       audio.play();
     }
     loadSongDetails();
-
-    const albumArtSrc = `${serverURL}/Music/${playlist[currentSongIndex]}/${playlist[currentSongIndex]}.png`;
-    const albumArtOptions = {
-      headers: {
-        Authorization: token,
-      },
-    };
-
-    fetch(albumArtSrc, albumArtOptions)
-      .then((res) => res.blob())
-      .then((blob) => {
-        document.getElementById("AlbumArt").src = URL.createObjectURL(blob);
-      })
-      .catch(() => {
-        document.getElementById("AlbumArt").src = null;
-      });
   }
 };
 
@@ -208,4 +216,31 @@ seekToPosition = (targetTime) => {
 
 audio.onended = () => {
   changeSong(true);
+};
+
+//---------------------------------------------
+// Notifications control
+//---------------------------------------------
+
+const updateNotificationControls = (song, artist, album, albumArtURL) => {
+  if ("mediaSession" in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: song,
+      artist: artist,
+      album: album,
+      artwork: [
+        {
+          src: albumArtURL,
+          type: "image/png",
+        },
+      ],
+    });
+
+    navigator.mediaSession.setActionHandler("previoustrack", () => {
+      changeSong(false);
+    });
+    navigator.mediaSession.setActionHandler("nexttrack", () => {
+      changeSong(true);
+    });
+  }
 };
