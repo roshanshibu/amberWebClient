@@ -4,26 +4,62 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css" />
-    <title>Document</title>
+    <title>Player</title>
   </head>
   <body>
-    <div id="authContainer">
-      <input type="text" id="server" placeholder="Server URL" />
-      <input type="password" id="token" placeholder="Access Token" />
-      <button id="randomPlaylistButton">Random Playlist</button>
-      <p>Status: <span id="connectionStatus" class="disconnected"></span></p>
+    <div class="HomeContainer">
+      <div class="AuthContainer Hidden">
+        <input type="text" id="serverURL" placeholder="Server URL" />
+        <input type="password" id="token" placeholder="Access Token" />
+        <button
+          id="randomPlaylistButton"
+          onclick="getRandomPlaylistWithNewCreds()"
+        >
+          Get Random Playlist
+        </button>
+        <p id="ConnectionStatus"></p>
+      </div>
+      <button onclick="promptLogin()" class="LogOutButton Hidden">
+        Log out
+      </button>
     </div>
-    <div class="songDetailsContainer">
-      <h1 id="songName"></h1>
-      <h2 id="artistName"></h2>
-      <h3 id="albumName"></h3>
+    <div class="PlayerContainer SmallPlayer">
+      <div class="Player">
+        <audio preload="true" id="AudioPlayer" controls crossorigin></audio>
+        <img
+          src="images/Path.svg"
+          id="MinimizePlayer"
+          onclick="minimizePlayer()"
+        />
+        <div class="MusicInfoContainer" onclick="maximizePlayer()">
+          <h1 id="Song">Nothing is playing</h1>
+          <h3 id="Artist">¯\_(ツ)_/¯</h3>
+          <h3 id="Album">-</h3>
+        </div>
+        <img
+          src="images/album_artx.png"
+          id="AlbumArt"
+          onerror="this.src='images/music_icon.svg'"
+        />
+        <input
+          type="range"
+          min="0"
+          max="100"
+          value="10"
+          id="Timeline"
+          oninput="seekToPosition(this.value)"
+        />
+        <div class="TimestampsContainer">
+          <p id="CurrentTime">0:13</p>
+          <p id="SongDuration">4:13</p>
+        </div>
+        <div class="ControlsContainer">
+          <img src="images/Previous.svg" onclick="changeSong(false)" />
+          <img src="images/Play.svg" id="PlayPause" />
+          <img src="images/Next.svg" onclick="changeSong(true)" />
+        </div>
+      </div>
     </div>
-    <audio preload="true" id="player" controls crossorigin></audio>
-    <div class="nextPreviousContainer">
-      <img src="previous.png" id="previousSong" />
-      <img src="next.png" id="nextSong" />
-    </div>
-    <img id="albumArt" src="" />
     <script src="https://cdn.jsdelivr.net/hls.js/latest/hls.js"></script>
     <script src="script.js"></script>
   </body>

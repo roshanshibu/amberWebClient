@@ -1,91 +1,279 @@
-@import url("https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
-
 :root {
+  --bg-color: #2e2e2e;
   color-scheme: dark;
-  font-family: "Space Mono";
-  --main-width: 350px;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  height: 100svh;
+  background: #4d4d4d;
 }
 * {
-  font-family: "Space Mono";
+  font-family: "PrimaryFont300";
 }
-html {
-  display: flex;
-  justify-content: center;
+
+@font-face {
+  font-family: "AccentFontRegular";
+  src: url("/fonts/SpaceGrotesk-Regular.woff2") format("woff2"),
+    url("/fonts/SpaceGrotesk-Regular.woff") format("woff");
 }
-body {
-  width: var(--main-width);
+
+@font-face {
+  font-family: "PrimaryFont200";
+  src: url("/fonts/Manrope-ExtraLight.woff2") format("woff2"),
+    url("/fonts/Manrope-ExtraLight.woff") format("woff");
+}
+@font-face {
+  font-family: "PrimaryFont300";
+  src: url("/fonts/Manrope-Light.woff2") format("woff2"),
+    url("/fonts/Manrope-Light.woff") format("woff");
+}
+
+.Hidden {
+  display: none !important;
+}
+
+.HomeContainer {
   display: flex;
   flex-direction: column;
+  width: 100vw;
+  align-items: center;
+  padding-top: 2rem;
 }
-#authContainer {
+.AuthContainer {
   display: flex;
-  flex-direction: column;
-  max-width: var(--main-width);
   gap: 5px;
-  margin-bottom: 20px;
-  text-align: center;
+  flex-direction: column;
+  width: 30rem;
 }
 
-.disconnected {
-  color: red;
-}
-.disconnected::after {
-  content: "Disconnected";
-}
-
-.connected {
-  color: greenyellow;
-}
-.connected::after {
-  content: "Connected";
-}
-
-.songDetailsContainer {
+.PlayerContainer {
   display: flex;
   flex-direction: column;
-  width: var(--main-width);
-  margin-bottom: 20px;
-  margin-top: 50px;
+  background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.15) 0%,
+      rgba(0, 0, 0, 0.4) 100%
+    ),
+    var(--bg-color);
+  height: 100%;
+  color: #ffffff;
+  transition: height 0.2s;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
-.songDetailsContainer > * {
-  text-align: center;
+
+.Player {
+  display: flex;
+  flex-direction: column;
+  padding-inline: 2rem;
+}
+
+#AudioPlayer {
+  display: none;
+}
+#MinimizePlayer {
+  width: 2.5rem;
+  align-self: flex-end;
+  opacity: 0.8;
+  margin-top: 2rem;
+}
+
+.MusicInfoContainer {
+  display: flex;
+  flex-direction: column;
+  margin-block: 5px 1.5rem;
+}
+.MusicInfoContainer > * {
+  margin: 0;
+  text-wrap: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  text-wrap: nowrap;
-  line-height: 1.2;
-  margin: 2px;
+  font-size: 1.1rem;
 }
-.songDetailsContainer > h1 {
-  font-size: 1.2rem;
-  font-weight: 600;
+.MusicInfoContainer > h1 {
+  margin-bottom: 15px;
+  font-family: "AccentFontRegular";
+  line-height: unset;
+  font-size: 1.8rem;
 }
-.songDetailsContainer > h2 {
+.MusicInfoContainer > h3 {
   font-size: 1rem;
-  font-weight: 500;
-}
-.songDetailsContainer > h3 {
-  font-size: 0.7rem;
-  font-weight: 500;
+  font-family: "PrimaryFont200";
+  letter-spacing: 0.9px;
 }
 
-audio {
-  align-self: center;
+#AlbumArt {
+  width: 15rem;
+  border-radius: 5px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border: 1px solid #ffffff7f;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #00000000 0%, #0000001e 100%);
 }
-.nextPreviousContainer {
+
+.TimestampsContainer {
   display: flex;
-  width: var(--main-width);
-  justify-content: space-around;
-  margin-bottom: 30px;
+  justify-content: space-between;
+  font-family: "PrimaryFont300";
 }
-.nextPreviousContainer > img {
-  padding: 10px 20px;
+.TimestampsContainer > p {
+  margin-block: 5px 0;
+}
+
+.ControlsContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3rem;
+  align-items: center;
+}
+.ControlsContainer > * {
+  width: 1.5rem;
+}
+.ControlsContainer > *:nth-child(2) {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+/* ---------------------------------------------------- */
+/* Minimized player                                     */
+/* ---------------------------------------------------- */
+
+.SmallPlayer {
+  height: 5rem;
+  flex-direction: row;
+  padding-inline: 0;
+  position: absolute;
+  bottom: 0;
+  background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.15) 0%,
+      rgba(0, 0, 0, 0.15) 100%
+    ),
+    var(--bg-color);
+  border-top: solid 1px var(--bg-color);
+}
+.SmallPlayer .Player {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0;
+}
+.SmallPlayer #MinimizePlayer,
+.SmallPlayer input[type="range"],
+.SmallPlayer .MusicInfoContainer > h3:nth-child(3),
+.SmallPlayer .TimestampsContainer,
+.SmallPlayer .ControlsContainer > img:nth-child(1),
+.SmallPlayer .ControlsContainer > img:nth-child(3),
+.SmallPlayer #AlbumArt {
+  display: none;
+}
+.SmallPlayer .MusicInfoContainer {
+  margin: 0;
+  justify-content: center;
+  margin-left: 2rem;
+  flex: 1;
+}
+.SmallPlayer .MusicInfoContainer > h1 {
+  margin: 0;
+  font-size: 1.2rem;
+  max-width: 60vw;
+}
+.SmallPlayer .MusicInfoContainer > h3 {
+  max-width: 60vw;
+}
+.SmallPlayer .ControlsContainer {
+  margin: 0;
+  margin-right: 2rem;
+}
+
+/* ---------------------------------------------------- */
+/* Timeline range input                                 */
+/* ---------------------------------------------------- */
+
+input[type="range"] {
+  width: 100%;
+  margin: 6px 0;
+  background-color: transparent;
+  -webkit-appearance: none;
+}
+input[type="range"]:focus {
+  outline: none;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  background: rgba(255, 255, 255, 0.5);
+  border: 0;
+  border-radius: 0.7px;
+  width: 100%;
+  height: 1px;
   cursor: pointer;
 }
-
-#albumArt {
-  width: 250px;
-  align-self: center;
-  aspect-ratio: 1;
-  object-fit: contain;
-  display: none;
+input[type="range"]::-webkit-slider-thumb {
+  margin-top: -6px;
+  width: 13px;
+  height: 13px;
+  background: #ffffff;
+  border: 0.9px solid #ffffff;
+  border-radius: 4px;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+input[type="range"]:focus::-webkit-slider-runnable-track {
+  background: #ffffff;
+}
+input[type="range"]::-moz-range-track {
+  background: rgba(255, 255, 255, 0.5);
+  border: 0;
+  border-radius: 0.7px;
+  width: 100%;
+  height: 1px;
+  cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 13px;
+  height: 13px;
+  background: #ffffff;
+  border: 0.9px solid #ffffff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+input[type="range"]::-ms-track {
+  background: transparent;
+  border-color: transparent;
+  border-width: 7.5px 0;
+  color: transparent;
+  width: 100%;
+  height: 1px;
+  cursor: pointer;
+}
+input[type="range"]::-ms-fill-lower {
+  background: #fafafa;
+  border: 0;
+  border-radius: 1.4px;
+}
+input[type="range"]::-ms-fill-upper {
+  background: rgba(255, 255, 255, 0.5);
+  border: 0;
+  border-radius: 1.4px;
+}
+input[type="range"]::-ms-thumb {
+  width: 13px;
+  height: 13px;
+  background: #ffffff;
+  border: 0.9px solid #ffffff;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 0px;
+  /*Needed to keep the Edge thumb centred*/
+}
+input[type="range"]:focus::-ms-fill-lower {
+  background: rgba(255, 255, 255, 0.5);
+}
+input[type="range"]:focus::-ms-fill-upper {
+  background: #ffffff;
 }
