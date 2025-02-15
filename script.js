@@ -69,6 +69,24 @@ loadHomeScreen();
 // Player logic
 //---------------------------------------------
 
+const albumArtImg = document.getElementById("AlbumArt");
+const colorThief = new ColorThief();
+albumArtImg.addEventListener("load", function () {
+  const [r, g, b] = colorThief.getColor(albumArtImg);
+  if (albumArtImg.src.endsWith("music_icon.svg")) {
+    const randomBgColors = [
+      "#1B5625",
+      "#206676",
+      "#95326a",
+      "#a44528",
+      "#7a7422",
+    ];
+    const randomColor =
+      randomBgColors[Math.floor(Math.random() * randomBgColors.length)];
+    document.documentElement.style.setProperty("--bg-color", randomColor);
+  } else document.documentElement.style.setProperty("--bg-color", `rgb(${r}, ${g}, ${b})`);
+});
+
 const loadSongDetails = async () => {
   let serverURL = localStorage.getItem("serverURL");
   let token = localStorage.getItem("token");
@@ -110,11 +128,11 @@ const loadSongDetails = async () => {
     .then((res) => res.blob())
     .then((blob) => {
       objectURL = URL.createObjectURL(blob);
-      document.getElementById("AlbumArt").src = objectURL;
+      albumArtImg.src = objectURL;
       updateNotificationControls(song, artist, album, objectURL);
     })
     .catch(() => {
-      document.getElementById("AlbumArt").src = null;
+      albumArtImg.src = null;
       updateNotificationControls(song, artist, album, null);
     });
 };
@@ -174,7 +192,6 @@ const playMusic = () => {
 audio.onplay = () => {
   const button = document.getElementById("PlayPause");
   button.src = "images/Pause.svg";
-  console.log(audio.currentTime);
   button.onclick = () => {
     pauseMusic();
   };

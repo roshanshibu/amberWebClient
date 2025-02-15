@@ -57,12 +57,13 @@ body {
   background: linear-gradient(
       180deg,
       rgba(0, 0, 0, 0.15) 0%,
-      rgba(0, 0, 0, 0.4) 100%
+      rgba(0, 0, 0, 0.4) 30%,
+      rgba(0, 0, 0, 0.8) 100%
     ),
     var(--bg-color);
   height: 100%;
   color: #ffffff;
-  transition: height 0.2s;
+  transition: height 0.2s, background-color 0.5s ease-in-out;
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -168,8 +169,8 @@ body {
   bottom: 0;
   background: linear-gradient(
       180deg,
-      rgba(0, 0, 0, 0.15) 0%,
-      rgba(0, 0, 0, 0.15) 100%
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0.6) 100%
     ),
     var(--bg-color);
   border-top: solid 1px var(--bg-color);
