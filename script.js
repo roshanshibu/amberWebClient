@@ -110,6 +110,7 @@ const loadSongDetails = async () => {
       document.getElementById("Song").textContent = song;
       document.getElementById("Artist").textContent = artist;
       document.getElementById("Album").textContent = album;
+      resetSongTitleScroll();
     } else {
       console.error("Error response:", errorText);
     }
@@ -227,12 +228,42 @@ audio.ontimeupdate = () => {
 };
 
 seekToPosition = (targetTime) => {
-  console.log(`user wants to seek to ${targetTime}`);
   audio.currentTime = targetTime;
 };
 
 audio.onended = () => {
   changeSong(true);
+};
+
+let scrollCurrent = 0;
+const scrollSongTitle = () => {
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async function startLoop() {
+    while (true) {
+      let songTitle = document.getElementById("Song");
+      const scrollAmount = 5;
+      const scrollWait = 150;
+      while (scrollCurrent < songTitle.scrollWidth - songTitle.clientWidth) {
+        scrollCurrent += scrollAmount;
+        songTitle.scroll(scrollCurrent, 0);
+        await sleep(scrollWait);
+      }
+      await sleep(scrollWait * 10);
+      scrollCurrent = 0;
+      songTitle.scroll(scrollCurrent, 0);
+      await sleep(scrollWait * 10);
+    }
+  }
+
+  startLoop();
+};
+scrollSongTitle();
+
+const resetSongTitleScroll = () => {
+  scrollCurrent = -100;
 };
 
 //---------------------------------------------
