@@ -163,6 +163,56 @@ body {
   padding-left: 2rem;
 }
 
+/* Side Panel */
+.sidePanel {
+  background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0.6) 100%
+    ),
+    var(--bg-color);
+  margin-inline: 1.5rem;
+  border-radius: 5px;
+  padding-inline: 20px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 2rem;
+  left: 0;
+  right: 0;
+  height: 80vh;
+  transition: all 0.2s;
+  border: 1px solid #ffffff12;
+}
+.sidePanel.collapsedTabs {
+  height: 3.5rem;
+}
+.sidePanel .tabLabelsContainer {
+  display: flex;
+  gap: 10px;
+}
+.sidePanel .tabDataContainer {
+  display: flex;
+  flex-direction: column;
+  max-height: 75vh;
+  overflow: auto;
+}
+.collapsedTabs > .tabDataContainer {
+  display: none;
+}
+
+#toggleSidePanelTabs {
+  width: 20px;
+  margin-left: auto;
+  cursor: pointer;
+  rotate: 0deg;
+  padding-inline: 1rem 0;
+  transition: all 0.2s;
+}
+.collapsedTabs #toggleSidePanelTabs {
+  rotate: 180deg;
+  padding-inline: 0 1rem;
+}
 /* ---------------------------------------------------- */
 /* Minimized player                                     */
 /* ---------------------------------------------------- */
@@ -220,6 +270,9 @@ body {
 .SmallPlayer .ControlsContainer > *:nth-child(2) {
   width: 2.5rem;
   height: 2.5rem;
+}
+.SmallPlayer .sidePanel {
+  display: none;
 }
 /* ---------------------------------------------------- */
 /* Timeline range input                                 */
@@ -306,4 +359,37 @@ input[type="range"]:focus::-ms-fill-lower {
 }
 input[type="range"]:focus::-ms-fill-upper {
   background: #ffffff;
+}
+
+/* Responsiveness */
+
+@media screen and (min-width: 900px) {
+  .PlayerContainer {
+    flex-direction: row;
+    justify-content: center;
+  }
+  .Player {
+    flex: 1;
+    max-width: 400px;
+  }
+  .SmallPlayer .Player {
+    max-width: unset;
+  }
+  .sidePanel {
+    margin-block: 5rem;
+    height: unset !important  ;
+    position: unset;
+    flex: 1;
+    max-width: 25rem;
+  }
+  .collapsedTabs > .tabDataContainer {
+    display: flex;
+  }
+  .tabDataContainer {
+    min-width: 20rem;
+  }
+
+  #toggleSidePanelTabs {
+    display: none;
+  }
 }

@@ -1,5 +1,5 @@
-var playlist = [];
-var playlistLength = 50;
+var queue = [];
+var queueLength = 50;
 var currentSongIndex = 0;
 var audio = document.querySelector("#AudioPlayer");
 
@@ -23,7 +23,7 @@ const promptLogin = () => {
 };
 
 const getRandomPlaylist = async (serverURL, token) => {
-  const endpoint = `${serverURL}/randomPlaylist?length=${playlistLength}`;
+  const endpoint = `${serverURL}/randomPlaylist?length=${queueLength}`;
   try {
     const response = await fetch(endpoint, {
       method: "GET",
@@ -38,11 +38,11 @@ const getRandomPlaylist = async (serverURL, token) => {
         .getElementsByClassName("LogOutButton")[0]
         .classList.remove("Hidden");
       const data = await response.json();
-      playlist = data["uuids"];
-      if (playlist.length < playlistLength) {
-        playlistLength = playlist.length;
+      queue = data["uuids"];
+      if (queue.length < queueLength) {
+        queueLength = queue.length;
       }
-      console.log(playlist);
+      console.log(queue);
       loadAudio(false);
       document
         .getElementsByClassName("AuthContainer")[0]
@@ -90,7 +90,7 @@ albumArtImg.addEventListener("load", function () {
 const loadSongDetails = async () => {
   let serverURL = localStorage.getItem("serverURL");
   let token = localStorage.getItem("token");
-  const endpoint = `${serverURL}/songDetails?UUID=${playlist[currentSongIndex]}`;
+  const endpoint = `${serverURL}/songDetails?UUID=${queue[currentSongIndex]}`;
   let song = "";
   let artist = "";
   let album = "";
@@ -118,7 +118,7 @@ const loadSongDetails = async () => {
     console.error("Connection error:", error);
   }
 
-  const albumArtSrc = `${serverURL}/Music/${playlist[currentSongIndex]}/${playlist[currentSongIndex]}.png`;
+  const albumArtSrc = `${serverURL}/Music/${queue[currentSongIndex]}/${queue[currentSongIndex]}.png`;
   const albumArtOptions = {
     headers: {
       Authorization: token,
@@ -151,7 +151,7 @@ const loadAudio = (playAfterLoad = false) => {
 
     var hls = new Hls(config);
     hls.loadSource(
-      `${serverURL}/Music/${playlist[currentSongIndex]}/${playlist[currentSongIndex]}.m3u8`
+      `${serverURL}/Music/${queue[currentSongIndex]}/${queue[currentSongIndex]}.m3u8`
     );
     hls.attachMedia(audio);
     navigator.mediaSession.setPositionState(null);
@@ -164,11 +164,11 @@ const loadAudio = (playAfterLoad = false) => {
 
 const changeSong = (next = true) => {
   currentSongIndex += next ? 1 : -1;
-  if (currentSongIndex >= playlistLength) {
+  if (currentSongIndex >= queueLength) {
     currentSongIndex = 0;
   }
   if (currentSongIndex == -1) {
-    currentSongIndex = playlistLength - 1;
+    currentSongIndex = queueLength - 1;
   }
   loadAudio(true);
 };
@@ -290,5 +290,19 @@ const updateNotificationControls = (song, artist, album, albumArtURL) => {
     navigator.mediaSession.setActionHandler("nexttrack", () => {
       changeSong(true);
     });
+  }
+};
+
+//---------------------------------------------
+// Side panel controls
+//---------------------------------------------
+
+const toggleSidePanelTabs = () => {
+  const sidePanel = document.getElementsByClassName("sidePanel")[0];
+  const collapsedTabsClass = "collapsedTabs";
+  if (sidePanel.classList.contains(collapsedTabsClass)) {
+    sidePanel.classList.remove(collapsedTabsClass);
+  } else {
+    sidePanel.classList.add(collapsedTabsClass);
   }
 };
