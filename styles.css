@@ -144,7 +144,7 @@ body {
 .ControlsContainer {
   display: flex;
   justify-content: space-between;
-  margin-top: 3rem;
+  margin-top: 1rem;
   align-items: center;
 }
 .ControlsContainer > * {
@@ -176,7 +176,7 @@ body {
   padding-inline: 20px;
   display: flex;
   flex-direction: column;
-  position: absolute;
+  position: fixed;
   bottom: 2rem;
   left: 0;
   right: 0;
@@ -185,11 +185,18 @@ body {
   border: 1px solid #ffffff12;
 }
 .sidePanel.collapsedTabs {
-  height: 3.5rem;
+  height: 2.5rem;
 }
 .sidePanel .tabLabelsContainer {
   display: flex;
   gap: 10px;
+  margin-block: 12px;
+}
+.collapsedTabs .tabLabelsContainer {
+  margin-block: auto;
+}
+.tabLabelsContainer > p {
+  margin: 0;
 }
 .sidePanel .tabDataContainer {
   display: flex;
