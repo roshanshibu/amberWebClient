@@ -42,7 +42,6 @@ const getRandomPlaylist = async (serverURL, token) => {
       if (queue.length < queueLength) {
         queueLength = queue.length;
       }
-      console.log(queue);
       loadAudio(false);
       document
         .getElementsByClassName("AuthContainer")[0]
@@ -118,7 +117,7 @@ const loadSongDetails = async () => {
     console.error("Connection error:", error);
   }
 
-  const albumArtSrc = `${serverURL}/Music/${queue[currentSongIndex]}/${queue[currentSongIndex]}.png`;
+  const albumArtSrc = `${serverURL}/Music/${queue[currentSongIndex]["UUID"]}/${queue[currentSongIndex]["UUID"]}.png`;
   const albumArtOptions = {
     headers: {
       Authorization: token,
@@ -151,7 +150,7 @@ const loadAudio = (playAfterLoad = false) => {
 
     var hls = new Hls(config);
     hls.loadSource(
-      `${serverURL}/Music/${queue[currentSongIndex]}/${queue[currentSongIndex]}.m3u8`
+      `${serverURL}/Music/${queue[currentSongIndex]["UUID"]}/${queue[currentSongIndex]["UUID"]}.m3u8`
     );
     hls.attachMedia(audio);
     navigator.mediaSession.setPositionState(null);
