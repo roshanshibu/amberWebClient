@@ -38,7 +38,7 @@ const getRandomPlaylist = async (serverURL, token) => {
         .getElementsByClassName("LogOutButton")[0]
         .classList.remove("Hidden");
       const data = await response.json();
-      queue = data["uuids"];
+      queue = data["playlist"];
       if (queue.length < queueLength) {
         queueLength = queue.length;
       }
@@ -90,7 +90,7 @@ albumArtImg.addEventListener("load", function () {
 const loadSongDetails = async () => {
   let serverURL = localStorage.getItem("serverURL");
   let token = localStorage.getItem("token");
-  const endpoint = `${serverURL}/songDetails?UUID=${queue[currentSongIndex]}`;
+  const endpoint = `${serverURL}/songDetails?UUID=${queue[currentSongIndex]["UUID"]}`;
   let song = "";
   let artist = "";
   let album = "";
